@@ -3,6 +3,8 @@
 set -euo pipefail
 
 DIR="$(cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd)"
+
+# shellcheck source=lib/shared.bash
 . "$DIR/../lib/shared.bash"
 
 echo
@@ -21,13 +23,13 @@ pr_number=$(echo "$response" | jq '.number')
 
 reviewers=$(plugin_read_list REVIEWERS)
 team_reviewers=$(plugin_read_list TEAM_REVIEWERS)
-if [[ -n "${!reviewers:-}" || "${!team_reviewers:-}" ]]; then
+if [[ -n "${reviewers:-}" || "${team_reviewers:-}" ]]; then
   echo "Adding reviewers"
   request_reviews "$reviewers" "$team_reviewers" "$pr_number" "$repo"
 fi
 
 labels=$(plugin_read_list LABELS)
-if [[ -n "${!labels:-}" ]]; then
+if [[ -n "${labels:-}" ]]; then
   echo "Adding labels"
   add_labels "$labels" "$pr_number" "$repo"
 fi

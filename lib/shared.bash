@@ -8,15 +8,17 @@ function open_pull_request() {
   local head=$3
   local base=$4
   local repo=$5
+  local payload
+  local url
 
-  local payload=$(jq -n \
-                     --arg TITLE "${title}" \
-                     --arg BODY  "${body}" \
-                     --arg HEAD  "${head}" \
-                     --arg BASE  "${base}" \
-                     '{ title: $TITLE, body: $BODY, head: $HEAD, base: $BASE }')
-  local url="$(base_url "${repo}")/pulls"
-  echo $(github_post open_pull_request "${url}" "${payload}")
+  payload=$(jq -n \
+               --arg TITLE "${title}" \
+               --arg BODY  "${body}" \
+               --arg HEAD  "${head}" \
+               --arg BASE  "${base}" \
+               '{ title: $TITLE, body: $BODY, head: $HEAD, base: $BASE }')
+  url="$(base_url "${repo}")/pulls"
+  github_post open_pull_request "${url}" "${payload}"
 }
 
 function request_reviews() {
@@ -24,29 +26,36 @@ function request_reviews() {
   local team_reviewers=$2
   local pr_number=$3
   local repo=$4
+  local payload
+  local url
 
-  local payload=$(jq -n \
-                     --arg REVIEWERS      "${reviewers}" \
-                     --arg TEAM_REVIEWERS "${team_reviewers}" \
-                     '{ reviewers: $REVIEWERS | split("\n"), team_reviewers: $TEAM_REVIEWERS | split("\n") }')
-  local url="$(base_url "${repo}")/pulls/${pr_number}/requested_reviewers"
-  echo $(github_post request_reviews "${url}" "${payload}")
+  payload=$(jq -n \
+               --arg REVIEWERS      "${reviewers}" \
+               --arg TEAM_REVIEWERS "${team_reviewers}" \
+               '{ reviewers: $REVIEWERS | split("\n"), team_reviewers: $TEAM_REVIEWERS | split("\n") }')
+  url="$(base_url "${repo}")/pulls/${pr_number}/requested_reviewers"
+  github_post request_reviews "${url}" "${payload}"
 }
 
 function add_labels() {
   local labels=$1
   local pr_number=$2
   local repo=$3
+  local payload
+  local url
 
-  local payload=$(jq -n --arg LABELS "${labels}" '$LABELS | split("\n")')
-  local url="$(base_url "${repo}")/issues/${pr_number}/labels"
-  echo $(github_post add_labels "${url}" "${payload}")
+  payload=$(jq -n --arg LABELS "${labels}" '$LABELS | split("\n")')
+  url="$(base_url "${repo}")/issues/${pr_number}/labels"
+  github_post add_labels "${url}" "${payload}"
 }
 
 function repo_from_origin() {
-  local origin=$(git remote get-url origin)
-  local without_prefix=${origin#*:}
-  echo ${without_prefix%.git}
+  local origin
+  local without_prefix
+
+  origin="$(git remote get-url origin)"
+  without_prefix="${origin#*:}"
+  echo "${without_prefix%.git}"
 }
 
 function base_url() {
@@ -67,7 +76,7 @@ function github_post() {
        -d "${payload}" \
        -H "Authorization: Bearer ${GITHUB_TOKEN}" \
        -o "tmp/github_api_calls/${name}_response.json"
-  echo "$(cat tmp/github_api_calls/${name}_response.json)"
+  cat "tmp/github_api_calls/${name}_response.json"
 }
 
 function plugin_read_config() {
