@@ -1,0 +1,26 @@
+---
+
+steps:
+
+  - label: ":hammer: Test"
+    plugins:
+      docker-compose#v1.3.1:
+        run: "tests"
+    agents:
+      queue: "${AGENT_QUEUE}"
+
+  - label: ":sparkles: Lint"
+    plugins:
+      plugin-linter#v1.0.0:
+        name: "envato/github-pull-request"
+    agents:
+      queue: "${AGENT_QUEUE}"
+
+  - label: ":shell: Shellcheck"
+    plugins:
+      shellcheck#v1.0.1:
+        files:
+          - "hooks/**"
+          - "lib/**"
+    agents:
+      queue: "${AGENT_QUEUE}"
