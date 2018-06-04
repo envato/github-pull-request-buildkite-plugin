@@ -1,0 +1,27 @@
+name: github-pull-request
+description: A Buildkite plugin that opens Github pull requests
+author: https://github.com/envato
+requirements:
+  - curl
+  - jq
+configuration:
+  properties:
+    base:
+      type: string
+    body:
+      type: string
+    head:
+      type: string
+    labels:
+      type: [ string, array ]
+    repo:
+      type: string
+    reviewers:
+      type: [ string, array ]
+    team-reviewers:
+      type: [ string, array ]
+    title:
+      type: string
+  required:
+    - title
+
