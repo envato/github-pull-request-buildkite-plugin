@@ -201,3 +201,34 @@ load '/usr/local/lib/bats/load.bash'
   unstub curl
   unstub git
 }
+
+@test 'Opens the Github pull request and adds a label' {
+  export BUILDKITE_BRANCH=feature-branch
+  export BUILDKITE_PLUGIN_GITHUB_PULL_REQUEST_TITLE=pr-title
+  export BUILDKITE_PLUGIN_GITHUB_PULL_REQUEST_BODY=pr-body
+  export BUILDKITE_PLUGIN_GITHUB_PULL_REQUEST_LABELS=pr-label
+  export GITHUB_TOKEN=secret-github-token
+
+  stub jq \
+    '-n --arg TITLE pr-title --arg BODY pr-body --arg HEAD feature-branch --arg BASE master "{ title: $TITLE, body: $BODY, head: $HEAD, base: $BASE }" : echo json-open-pr-request' \
+    '.number : echo 711' \
+    '.html_url : echo pr-url' \
+    '-n --arg LABELS "pr-label" "$LABELS | split(\"\n\")" : echo json-add-labels-request'
+  stub curl \
+    '-s -X POST https://api.github.com/repos/owner/project/pulls -d json-open-pr-request -H "Authorization: Bearer secret-github-token" -o tmp/github_api_calls/open_pull_request_response.json : echo yes' \
+    '-s -X POST https://api.github.com/repos/owner/project/issues/711/labels -d json-add-labels-request -H "Authorization: Bearer secret-github-token" -o tmp/github_api_calls/add_labels_response.json : echo yes'
+  stub git 'remote get-url origin : echo "git@github.com:owner/project"'
+  stub cat \
+    'tmp/github_api_calls/open_pull_request_response.json : echo json-open-pr-response' \
+    'tmp/github_api_calls/add_labels_response.json : echo json-add-labels-response'
+
+
+  run $PWD/hooks/command
+
+  assert_success
+  assert_output --partial 'Github pull request opened: pr-url'
+  unstub jq
+  unstub curl
+  unstub git
+}
+
