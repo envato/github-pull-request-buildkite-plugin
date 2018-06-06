@@ -9,6 +9,12 @@ DIR="$(cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd)"
 
 echo "+++ :github: Opening Pull Request"
 
+if [[ -z "${GITHUB_TOKEN:-}" ]]; then
+  echo 'Error: GITHUB_TOKEN environment variable not set'
+  echo 'A Github personal access token with repo permissions is needed to open pull requests'
+  exit 1
+fi
+
 base=$(plugin_read_config BASE master)
 body=$(plugin_read_config BODY '')
 head=$(plugin_read_config HEAD "${BUILDKITE_BRANCH}")

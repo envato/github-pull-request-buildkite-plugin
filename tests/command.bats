@@ -232,3 +232,10 @@ load '/usr/local/lib/bats/load.bash'
   unstub git
 }
 
+@test 'Errors out if GITHUB_TOKEN is not provided' {
+  run $PWD/hooks/command
+
+  assert_failure
+  assert_output --partial 'Error: GITHUB_TOKEN environment variable not set'
+}
+
