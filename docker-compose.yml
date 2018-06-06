@@ -3,7 +3,7 @@ services:
   tests:
     image: "buildkite/plugin-tester"
     volumes:
-      - ".:/plugin:ro"
+      - ".:/plugin"
   lint:
     image: "buildkite/plugin-linter"
     command: ["--name", "envato/bundle-update"]

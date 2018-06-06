@@ -76,7 +76,6 @@ function github_post() {
        -d "${payload}" \
        -H "Authorization: Bearer ${GITHUB_TOKEN}" \
        -o "tmp/github_api_calls/${name}_response.json"
-  cat "tmp/github_api_calls/${name}_response.json"
 }
 
 function plugin_read_config() {

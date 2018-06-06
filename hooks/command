@@ -15,19 +15,20 @@ head=$(plugin_read_config HEAD "${BUILDKITE_BRANCH}")
 title=$(plugin_read_config TITLE '')
 repo=$(plugin_read_config REPO "$(repo_from_origin)")
 
-response=$(open_pull_request "$title" "$body" "$head" "$base" "$repo")
+open_pull_request "$title" "$body" "$head" "$base" "$repo"
+response=$(cat "tmp/github_api_calls/open_pull_request_response.json")
 pr_number=$(echo "$response" | jq '.number')
 html_url=$(echo "$response" | jq '.html_url')
 
 reviewers=$(plugin_read_list REVIEWERS)
 team_reviewers=$(plugin_read_list TEAM_REVIEWERS)
 if [[ -n "${reviewers:-}" || "${team_reviewers:-}" ]]; then
-  response=$(request_reviews "$reviewers" "$team_reviewers" "$pr_number" "$repo")
+  request_reviews "$reviewers" "$team_reviewers" "$pr_number" "$repo"
 fi
 
 labels=$(plugin_read_list LABELS)
 if [[ -n "${labels:-}" ]]; then
-  response=$(add_labels "$labels" "$pr_number" "$repo")
+  add_labels "$labels" "$pr_number" "$repo"
 fi
 
 echo "Github pull request opened: ${html_url}"
