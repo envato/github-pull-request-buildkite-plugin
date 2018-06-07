@@ -1,4 +1,4 @@
-name: github-pull-request
+name: Github Pull Request
 description: A Buildkite plugin that opens Github pull requests
 author: https://github.com/envato
 requirements:
