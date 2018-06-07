@@ -11,8 +11,8 @@ steps:
 
   - label: ":sparkles: Lint"
     plugins:
-      plugin-linter#v1.0.0:
-        name: "envato/github-pull-request"
+      plugin-linter#v2.0.0:
+        id: "envato/github-pull-request"
     agents:
       queue: "${AGENT_QUEUE}"
 
