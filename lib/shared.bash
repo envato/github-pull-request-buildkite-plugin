@@ -71,11 +71,12 @@ function github_post() {
 
   mkdir -p tmp/github_api_calls
   echo "${payload}" > "tmp/github_api_calls/${name}_request.json"
-  curl -s \
-       -X POST "${url}" \
-       -d "${payload}" \
-       -H "Authorization: Bearer ${GITHUB_TOKEN}" \
-       -o "tmp/github_api_calls/${name}_response.json"
+  curl --silent \
+       --data "${payload}" \
+       --header "Authorization: Bearer ${GITHUB_TOKEN}" \
+       --output "tmp/github_api_calls/${name}_response.json" \
+       --request POST \
+       "${url}"
 }
 
 function plugin_read_config() {
