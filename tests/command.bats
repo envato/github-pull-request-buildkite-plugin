@@ -105,6 +105,7 @@ load '/usr/local/lib/bats/load.bash'
 
   assert_success
   assert_output --partial 'Github pull request opened: pr-url'
+  assert_output --partial 'Reviews requested'
   unstub jq
   unstub curl
   unstub git
@@ -136,6 +137,7 @@ load '/usr/local/lib/bats/load.bash'
 
   assert_success
   assert_output --partial 'Github pull request opened: pr-url'
+  assert_output --partial 'Reviews requested'
   unstub jq
   unstub curl
   unstub git
@@ -166,6 +168,7 @@ load '/usr/local/lib/bats/load.bash'
 
   assert_success
   assert_output --partial 'Github pull request opened: pr-url'
+  assert_output --partial 'Reviews requested'
   unstub jq
   unstub curl
   unstub git
@@ -197,6 +200,7 @@ load '/usr/local/lib/bats/load.bash'
 
   assert_success
   assert_output --partial 'Github pull request opened: pr-url'
+  assert_output --partial 'Reviews requested'
   unstub jq
   unstub curl
   unstub git
@@ -227,6 +231,7 @@ load '/usr/local/lib/bats/load.bash'
 
   assert_success
   assert_output --partial 'Github pull request opened: pr-url'
+  assert_output --partial 'Labels added'
   unstub jq
   unstub curl
   unstub git
