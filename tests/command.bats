@@ -18,7 +18,7 @@ load '/usr/local/lib/bats/load.bash'
     '-n --arg TITLE pr-title --arg BODY pr-body --arg HEAD feature-branch --arg BASE master "{ title: $TITLE, body: $BODY, head: $HEAD, base: $BASE }" : echo json-open-pr-request' \
     '.number : echo 711' \
     '.html_url : echo pr-url'
-  stub curl '--silent --data json-open-pr-request --header "Authorization: Bearer secret-github-token" --output tmp/github_api_calls/open_pull_request_response.json --request POST https://api.github.com/repos/owner/project/pulls : echo yes'
+  stub curl '--silent --write-out %{http_code} --data json-open-pr-request --header "Authorization: Bearer secret-github-token" --output tmp/github_api_calls/open_pull_request_response.json --request POST https://api.github.com/repos/owner/project/pulls : echo 200'
   stub git 'remote get-url origin : echo "git@github.com:owner/project"'
   stub cat 'tmp/github_api_calls/open_pull_request_response.json : echo json-open-pr-response'
 
@@ -42,7 +42,7 @@ load '/usr/local/lib/bats/load.bash'
     '-n --arg TITLE pr-title --arg BODY pr-body --arg HEAD feature-branch --arg BASE master "{ title: $TITLE, body: $BODY, head: $HEAD, base: $BASE }" : echo json-open-pr-request' \
     '.number : echo 711' \
     '.html_url : echo pr-url'
-  stub curl '--silent --data json-open-pr-request --header "Authorization: Bearer secret-github-token" --output tmp/github_api_calls/open_pull_request_response.json --request POST https://api.github.com/repos/another-owner/another-project/pulls : echo yes'
+  stub curl '--silent --write-out %{http_code} --data json-open-pr-request --header "Authorization: Bearer secret-github-token" --output tmp/github_api_calls/open_pull_request_response.json --request POST https://api.github.com/repos/another-owner/another-project/pulls : echo 200'
   stub git 'remote get-url origin : echo "git@github.com:owner/project"'
   stub cat 'tmp/github_api_calls/open_pull_request_response.json : echo json-open-pr-response'
 
@@ -67,7 +67,7 @@ load '/usr/local/lib/bats/load.bash'
     '-n --arg TITLE pr-title --arg BODY pr-body --arg HEAD pr-head --arg BASE pr-base "{ title: $TITLE, body: $BODY, head: $HEAD, base: $BASE }" : echo json-open-pr-request' \
     '.number : echo 711' \
     '.html_url : echo pr-url'
-  stub curl '--silent --data json-open-pr-request --header "Authorization: Bearer secret-github-token" --output tmp/github_api_calls/open_pull_request_response.json --request POST https://api.github.com/repos/owner/project/pulls : echo yes'
+  stub curl '--silent --write-out %{http_code} --data json-open-pr-request --header "Authorization: Bearer secret-github-token" --output tmp/github_api_calls/open_pull_request_response.json --request POST https://api.github.com/repos/owner/project/pulls : echo 200'
   stub git 'remote get-url origin : echo "git@github.com:owner/project"'
   stub cat 'tmp/github_api_calls/open_pull_request_response.json : echo json-open-pr-response'
 
@@ -93,8 +93,8 @@ load '/usr/local/lib/bats/load.bash'
     '.html_url : echo pr-url' \
     '-n --arg REVIEWERS "pr-reviewer" --arg TEAM_REVIEWERS "" "{ reviewers: $REVIEWERS | split(\"\n\"), team_reviewers: $TEAM_REVIEWERS | split(\"\n\") }" : echo json-request-reviews-request'
   stub curl \
-    '--silent --data json-open-pr-request --header "Authorization: Bearer secret-github-token" --output tmp/github_api_calls/open_pull_request_response.json --request POST https://api.github.com/repos/owner/project/pulls : echo yes' \
-    '--silent --data json-request-reviews-request --header "Authorization: Bearer secret-github-token" --output tmp/github_api_calls/request_reviews_response.json --request POST https://api.github.com/repos/owner/project/pulls/711/requested_reviewers : echo yes'
+    '--silent --write-out %{http_code} --data json-open-pr-request --header "Authorization: Bearer secret-github-token" --output tmp/github_api_calls/open_pull_request_response.json --request POST https://api.github.com/repos/owner/project/pulls : echo 200' \
+    '--silent --write-out %{http_code} --data json-request-reviews-request --header "Authorization: Bearer secret-github-token" --output tmp/github_api_calls/request_reviews_response.json --request POST https://api.github.com/repos/owner/project/pulls/711/requested_reviewers : echo 200'
   stub git 'remote get-url origin : echo "git@github.com:owner/project"'
   stub cat \
     'tmp/github_api_calls/open_pull_request_response.json : echo json-open-pr-response' \
@@ -124,8 +124,8 @@ load '/usr/local/lib/bats/load.bash'
     '.html_url : echo pr-url' \
     '-n --arg REVIEWERS "pr-reviewer1\npr-reviewer2" --arg TEAM_REVIEWERS "" "{ reviewers: $REVIEWERS | split(\"\n\"), team_reviewers: $TEAM_REVIEWERS | split(\"\n\") }" : echo json-request-reviews-request'
   stub curl \
-    '--silent --data json-open-pr-request --header "Authorization: Bearer secret-github-token" --output tmp/github_api_calls/open_pull_request_response.json --request POST https://api.github.com/repos/owner/project/pulls : echo yes' \
-    '--silent --data json-request-reviews-request --header "Authorization: Bearer secret-github-token" --output tmp/github_api_calls/request_reviews_response.json --request POST https://api.github.com/repos/owner/project/pulls/711/requested_reviewers : echo yes'
+    '--silent --write-out %{http_code} --data json-open-pr-request --header "Authorization: Bearer secret-github-token" --output tmp/github_api_calls/open_pull_request_response.json --request POST https://api.github.com/repos/owner/project/pulls : echo 200' \
+    '--silent --write-out %{http_code} --data json-request-reviews-request --header "Authorization: Bearer secret-github-token" --output tmp/github_api_calls/request_reviews_response.json --request POST https://api.github.com/repos/owner/project/pulls/711/requested_reviewers : echo 200'
   stub git 'remote get-url origin : echo "git@github.com:owner/project"'
   stub cat \
     'tmp/github_api_calls/open_pull_request_response.json : echo json-open-pr-response' \
@@ -154,8 +154,8 @@ load '/usr/local/lib/bats/load.bash'
     '.html_url : echo pr-url' \
     '-n --arg REVIEWERS "" --arg TEAM_REVIEWERS "pr-reviewer" "{ reviewers: $REVIEWERS | split(\"\n\"), team_reviewers: $TEAM_REVIEWERS | split(\"\n\") }" : echo json-request-reviews-request'
   stub curl \
-    '--silent --data json-open-pr-request --header "Authorization: Bearer secret-github-token" --output tmp/github_api_calls/open_pull_request_response.json --request POST https://api.github.com/repos/owner/project/pulls : echo yes' \
-    '--silent --data json-request-reviews-request --header "Authorization: Bearer secret-github-token" --output tmp/github_api_calls/request_reviews_response.json --request POST https://api.github.com/repos/owner/project/pulls/711/requested_reviewers : echo yes'
+    '--silent --write-out %{http_code} --data json-open-pr-request --header "Authorization: Bearer secret-github-token" --output tmp/github_api_calls/open_pull_request_response.json --request POST https://api.github.com/repos/owner/project/pulls : echo 200' \
+    '--silent --write-out %{http_code} --data json-request-reviews-request --header "Authorization: Bearer secret-github-token" --output tmp/github_api_calls/request_reviews_response.json --request POST https://api.github.com/repos/owner/project/pulls/711/requested_reviewers : echo 200'
   stub git 'remote get-url origin : echo "git@github.com:owner/project"'
   stub cat \
     'tmp/github_api_calls/open_pull_request_response.json : echo json-open-pr-response' \
@@ -185,8 +185,8 @@ load '/usr/local/lib/bats/load.bash'
     '.html_url : echo pr-url' \
     '-n --arg REVIEWERS "" --arg TEAM_REVIEWERS "pr-reviewer1\npr-reviewer2" "{ reviewers: $REVIEWERS | split(\"\n\"), team_reviewers: $TEAM_REVIEWERS | split(\"\n\") }" : echo json-request-reviews-request'
   stub curl \
-    '--silent --data json-open-pr-request --header "Authorization: Bearer secret-github-token" --output tmp/github_api_calls/open_pull_request_response.json --request POST https://api.github.com/repos/owner/project/pulls : echo yes' \
-    '--silent --data json-request-reviews-request --header "Authorization: Bearer secret-github-token" --output tmp/github_api_calls/request_reviews_response.json --request POST https://api.github.com/repos/owner/project/pulls/711/requested_reviewers : echo yes'
+    '--silent --write-out %{http_code} --data json-open-pr-request --header "Authorization: Bearer secret-github-token" --output tmp/github_api_calls/open_pull_request_response.json --request POST https://api.github.com/repos/owner/project/pulls : echo 200' \
+    '--silent --write-out %{http_code} --data json-request-reviews-request --header "Authorization: Bearer secret-github-token" --output tmp/github_api_calls/request_reviews_response.json --request POST https://api.github.com/repos/owner/project/pulls/711/requested_reviewers : echo 200'
   stub git 'remote get-url origin : echo "git@github.com:owner/project"'
   stub cat \
     'tmp/github_api_calls/open_pull_request_response.json : echo json-open-pr-response' \
@@ -215,8 +215,8 @@ load '/usr/local/lib/bats/load.bash'
     '.html_url : echo pr-url' \
     '-n --arg LABELS "pr-label" "$LABELS | split(\"\n\")" : echo json-add-labels-request'
   stub curl \
-    '--silent --data json-open-pr-request --header "Authorization: Bearer secret-github-token" --output tmp/github_api_calls/open_pull_request_response.json --request POST https://api.github.com/repos/owner/project/pulls : echo yes' \
-    '--silent --data json-add-labels-request --header "Authorization: Bearer secret-github-token" --output tmp/github_api_calls/add_labels_response.json --request POST https://api.github.com/repos/owner/project/issues/711/labels : echo yes'
+    '--silent --write-out %{http_code} --data json-open-pr-request --header "Authorization: Bearer secret-github-token" --output tmp/github_api_calls/open_pull_request_response.json --request POST https://api.github.com/repos/owner/project/pulls : echo 200' \
+    '--silent --write-out %{http_code} --data json-add-labels-request --header "Authorization: Bearer secret-github-token" --output tmp/github_api_calls/add_labels_response.json --request POST https://api.github.com/repos/owner/project/issues/711/labels : echo 200'
   stub git 'remote get-url origin : echo "git@github.com:owner/project"'
   stub cat \
     'tmp/github_api_calls/open_pull_request_response.json : echo json-open-pr-response' \
@@ -228,6 +228,29 @@ load '/usr/local/lib/bats/load.bash'
   assert_success
   assert_output --partial 'Github pull request opened: pr-url'
   unstub jq
+  unstub curl
+  unstub git
+}
+
+@test 'Errors out if Github return non-200 HTTP status' {
+  export BUILDKITE_BRANCH=feature-branch
+  export BUILDKITE_PLUGIN_GITHUB_PULL_REQUEST_TITLE=pr-title
+  export BUILDKITE_PLUGIN_GITHUB_PULL_REQUEST_BODY=pr-body
+  export GITHUB_TOKEN=secret-github-token
+
+  stub jq \
+    '-n --arg TITLE pr-title --arg BODY pr-body --arg HEAD feature-branch --arg BASE master "{ title: $TITLE, body: $BODY, head: $HEAD, base: $BASE }" : echo json-open-pr-request' \
+    '.number : echo 711' \
+    '.html_url : echo pr-url'
+  stub curl '--silent --write-out %{http_code} --data json-open-pr-request --header "Authorization: Bearer secret-github-token" --output tmp/github_api_calls/open_pull_request_response.json --request POST https://api.github.com/repos/owner/project/pulls : echo 500'
+  stub git 'remote get-url origin : echo "git@github.com:owner/project"'
+  stub cat 'tmp/github_api_calls/open_pull_request_response.json : echo json-open-pr-response'
+
+  run $PWD/hooks/command
+
+  assert_failure
+  assert_output --partial 'Github responded with 500:'
+  assert_output --partial 'json-open-pr-response'
   unstub curl
   unstub git
 }

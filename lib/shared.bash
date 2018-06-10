@@ -68,15 +68,26 @@ function github_post() {
   local name=$1
   local url=$2
   local payload=$3
+  local temp_dir='tmp/github_api_calls'
+  local request_file="${temp_dir}/${name}_request.json"
+  local response_file="${temp_dir}/${name}_response.json"
+  local http_code
 
-  mkdir -p tmp/github_api_calls
-  echo "${payload}" > "tmp/github_api_calls/${name}_request.json"
-  curl --silent \
-       --data "${payload}" \
-       --header "Authorization: Bearer ${GITHUB_TOKEN}" \
-       --output "tmp/github_api_calls/${name}_response.json" \
-       --request POST \
-       "${url}"
+  mkdir -p "${temp_dir}"
+  echo "${payload}" > "${request_file}"
+
+  http_code="$(curl --silent \
+                    --write-out '%{http_code}'\
+                    --data "${payload}" \
+                    --header "Authorization: Bearer ${GITHUB_TOKEN}" \
+                    --output "${response_file}" \
+                    --request POST \
+                    "${url}")"
+  if [[ ! "${http_code}" =~ ^2[[:digit:]]{2}$ ]]; then
+    echo "Github responded with ${http_code}:"
+    cat "${response_file}"
+    exit 1
+  fi
 }
 
 function plugin_read_config() {
