@@ -4,6 +4,8 @@ set -euo pipefail
 
 DIR="$(cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd)"
 
+# shellcheck source=lib/config.bash
+. "$DIR/../lib/config.bash"
 # shellcheck source=lib/git.bash
 . "$DIR/../lib/git.bash"
 # shellcheck source=lib/shared.bash
