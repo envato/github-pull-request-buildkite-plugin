@@ -6,6 +6,9 @@
 A [Buildkite plugin](https://buildkite.com/docs/agent/v3/plugins) that lets you
 open Github pull requests.
 
+Once opened the number identifying the new Github pull request will be stored
+in the build meta-data with key: `github-pull-request-plugin-number`.
+
 ## Example
 
 The only required configuration is the pull request title. In this case the

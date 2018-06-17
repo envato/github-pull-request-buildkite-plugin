@@ -6,6 +6,8 @@ DIR="$(cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd)"
 
 # shellcheck source=lib/shared.bash
 . "$DIR/../lib/shared.bash"
+# shellcheck source=lib/metadata.bash
+. "$DIR/../lib/metadata.bash"
 
 echo "+++ :github: Opening Pull Request"
 
@@ -26,6 +28,7 @@ response=$(cat "tmp/github_api_calls/open_pull_request_response.json")
 pr_number=$(echo "$response" | jq '.number')
 html_url=$(echo "$response" | jq '.html_url')
 echo "Github pull request opened: ${html_url}"
+plugin_set_metadata number "$pr_number"
 
 reviewers=$(plugin_read_list REVIEWERS)
 team_reviewers=$(plugin_read_list TEAM_REVIEWERS)
