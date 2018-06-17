@@ -49,15 +49,6 @@ function add_labels() {
   github_post add_labels "${url}" "${payload}"
 }
 
-function repo_from_origin() {
-  local origin
-  local without_prefix
-
-  origin="$(git remote get-url origin)"
-  without_prefix="${origin#*:}"
-  echo "${without_prefix%.git}"
-}
-
 function base_url() {
   local repo=$1
 
