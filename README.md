@@ -19,8 +19,8 @@ the current branch into `master`.
 steps:
   - label: ":github: Open Pull Request"
     plugins:
-      envato/github-pull-request#v0.3.0:
-        title: "Example pull request title"
+      - envato/github-pull-request#v0.3.0:
+          title: "Example pull request title"
 ```
 
 One can specify the branches to use. Here we open a pull request to merge the
@@ -30,10 +30,10 @@ One can specify the branches to use. Here we open a pull request to merge the
 steps:
   - label: ":github: Open Pull Request"
     plugins:
-      envato/github-pull-request#v0.3.0:
-        title: "Deploy feature-1 to staging"
-        head: "feature-1"
-        base: "staging"
+      - envato/github-pull-request#v0.3.0:
+          title: "Deploy feature-1 to staging"
+          head: "feature-1"
+          base: "staging"
 ```
 
 One can specify a cross account pull request also:
@@ -42,10 +42,10 @@ One can specify a cross account pull request also:
 steps:
   - label: ":github: Open Pull Request"
     plugins:
-      envato/github-pull-request#v0.3.0:
-        title: "Please accept my cool feature"
-        head: "my-account:my-branch"
-        repo: "someone-elses-account/project"
+      - envato/github-pull-request#v0.3.0:
+          title: "Please accept my cool feature"
+          head: "my-account:my-branch"
+          repo: "someone-elses-account/project"
 ```
 
 To request reviews:
@@ -54,14 +54,14 @@ To request reviews:
 steps:
   - label: ":github: Open Pull Request"
     plugins:
-      envato/github-pull-request#v0.3.0:
-        title: "Example pull request title"
-        reviewers:
-          - toolmantim
-          - keithpitt
-        team-reviewers:
-          - a_team
-          - b_team
+      - envato/github-pull-request#v0.3.0:
+          title: "Example pull request title"
+          reviewers:
+            - toolmantim
+            - keithpitt
+          team-reviewers:
+            - a_team
+            - b_team
 ```
 
 To add labels:
@@ -70,11 +70,11 @@ To add labels:
 steps:
   - label: ":github: Open Pull Request"
     plugins:
-      envato/github-pull-request#v0.3.0:
-        title: "Example pull request title"
-        labels:
-          - wip
-          - security
+      - envato/github-pull-request#v0.3.0:
+          title: "Example pull request title"
+          labels:
+            - wip
+            - security
 ```
 
 ## Authentication
@@ -90,8 +90,8 @@ SCM.
 steps:
   - label: ":github: Open Pull Request (not recommended)"
     plugins:
-      envato/github-pull-request#v0.3.0:
-        title: "Example pull request title"
+      - envato/github-pull-request#v0.3.0:
+          title: "Example pull request title"
     env:
       - GITHUB_TOKEN=<my-secret-token>
 ```
