@@ -4,23 +4,23 @@ steps:
 
   - label: ":hammer: Test"
     plugins:
-      docker-compose#v2.5.1:
-        run: "tests"
+      - docker-compose#v2.5.1:
+          run: "tests"
     agents:
       queue: "${AGENT_QUEUE}"
 
   - label: ":sparkles: Lint"
     plugins:
-      plugin-linter#v2.0.0:
-        id: "envato/github-pull-request"
+      - plugin-linter#v2.0.0:
+          id: "envato/github-pull-request"
     agents:
       queue: "${AGENT_QUEUE}"
 
   - label: ":shell: Shellcheck"
     plugins:
-      shellcheck#v1.1.1:
-        files:
-          - "hooks/**"
-          - "lib/**"
+      - shellcheck#v1.1.1:
+          files:
+            - "hooks/**"
+            - "lib/**"
     agents:
       queue: "${AGENT_QUEUE}"
