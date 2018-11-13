@@ -4,7 +4,7 @@ steps:
 
   - label: ":hammer: Test"
     plugins:
-      docker-compose#v2.3.0:
+      docker-compose#v2.5.1:
         run: "tests"
     agents:
       queue: "${AGENT_QUEUE}"
@@ -18,7 +18,7 @@ steps:
 
   - label: ":shell: Shellcheck"
     plugins:
-      shellcheck#v1.0.1:
+      shellcheck#v1.1.1:
         files:
           - "hooks/**"
           - "lib/**"
