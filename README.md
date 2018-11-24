@@ -19,7 +19,7 @@ the current branch into `master`.
 steps:
   - label: ":github: Open Pull Request"
     plugins:
-      - envato/github-pull-request#v0.3.0:
+      - envato/github-pull-request#v0.4.0:
           title: "Example pull request title"
 ```
 
@@ -30,7 +30,7 @@ One can specify the branches to use. Here we open a pull request to merge the
 steps:
   - label: ":github: Open Pull Request"
     plugins:
-      - envato/github-pull-request#v0.3.0:
+      - envato/github-pull-request#v0.4.0:
           title: "Deploy feature-1 to staging"
           head: "feature-1"
           base: "staging"
@@ -42,7 +42,7 @@ One can specify a cross account pull request also:
 steps:
   - label: ":github: Open Pull Request"
     plugins:
-      - envato/github-pull-request#v0.3.0:
+      - envato/github-pull-request#v0.4.0:
           title: "Please accept my cool feature"
           head: "my-account:my-branch"
           repo: "someone-elses-account/project"
@@ -54,7 +54,7 @@ To request reviews:
 steps:
   - label: ":github: Open Pull Request"
     plugins:
-      - envato/github-pull-request#v0.3.0:
+      - envato/github-pull-request#v0.4.0:
           title: "Example pull request title"
           reviewers:
             - toolmantim
@@ -70,7 +70,7 @@ To add labels:
 steps:
   - label: ":github: Open Pull Request"
     plugins:
-      - envato/github-pull-request#v0.3.0:
+      - envato/github-pull-request#v0.4.0:
           title: "Example pull request title"
           labels:
             - wip
@@ -90,7 +90,7 @@ SCM.
 steps:
   - label: ":github: Open Pull Request (not recommended)"
     plugins:
-      - envato/github-pull-request#v0.3.0:
+      - envato/github-pull-request#v0.4.0:
           title: "Example pull request title"
     env:
       - GITHUB_TOKEN=<my-secret-token>
