@@ -3,7 +3,6 @@
 load "$BATS_PATH/load.bash"
 
 # Uncomment the following to get more detail on failures of stubs
-# export JQ_STUB_DEBUG=/dev/tty
 # export CURL_STUB_DEBUG=/dev/tty
 # export GIT_STUB_DEBUG=/dev/tty
 # export BUILDKITE_AGENT_STUB_DEBUG=/dev/tty
@@ -14,10 +13,6 @@ load "$BATS_PATH/load.bash"
   export BUILDKITE_PLUGIN_GITHUB_PULL_REQUEST_BODY=pr-body
   export GITHUB_TOKEN=secret-github-token
 
-  stub jq \
-    '-n --arg TITLE pr-title --arg BODY pr-body --arg HEAD feature-branch --arg BASE master "{ title: $TITLE, body: $BODY, head: $HEAD, base: $BASE }" : echo json-open-pr-request' \
-    '.number : echo 711' \
-    '.html_url : echo pr-url'
   stub curl '--silent --write-out %{http_code} --data json-open-pr-request --header "Authorization: Bearer secret-github-token" --output tmp/github_api_calls/open_pull_request_response.json --request POST https://api.github.com/repos/owner/project/pulls : echo 200'
   stub git 'remote get-url origin : echo "git@github.com:owner/project"'
   stub buildkite-agent
@@ -26,7 +21,6 @@ load "$BATS_PATH/load.bash"
 
   assert_success
   assert_output --partial 'Github pull request opened: pr-url'
-  unstub jq
   unstub curl
   unstub git
 }
@@ -37,10 +31,6 @@ load "$BATS_PATH/load.bash"
   export BUILDKITE_PLUGIN_GITHUB_PULL_REQUEST_BODY=pr-body
   export GITHUB_TOKEN=secret-github-token
 
-  stub jq \
-    '-n --arg TITLE pr-title --arg BODY pr-body --arg HEAD feature-branch --arg BASE master "{ title: $TITLE, body: $BODY, head: $HEAD, base: $BASE }" : echo json-open-pr-request' \
-    '.number : echo 711' \
-    '.html_url : echo pr-url'
   stub curl '--silent --write-out %{http_code} --data json-open-pr-request --header "Authorization: Bearer secret-github-token" --output tmp/github_api_calls/open_pull_request_response.json --request POST https://api.github.com/repos/owner/project/pulls : echo 200'
   stub git 'remote get-url origin : echo "git@github.com:owner/project"'
   stub buildkite-agent 'meta-data set github-pull-request-plugin-number 711 : echo metadata set'
@@ -58,10 +48,6 @@ load "$BATS_PATH/load.bash"
   export BUILDKITE_PLUGIN_GITHUB_PULL_REQUEST_REPO=another-owner/another-project
   export GITHUB_TOKEN=secret-github-token
 
-  stub jq \
-    '-n --arg TITLE pr-title --arg BODY pr-body --arg HEAD feature-branch --arg BASE master "{ title: $TITLE, body: $BODY, head: $HEAD, base: $BASE }" : echo json-open-pr-request' \
-    '.number : echo 711' \
-    '.html_url : echo pr-url'
   stub curl '--silent --write-out %{http_code} --data json-open-pr-request --header "Authorization: Bearer secret-github-token" --output tmp/github_api_calls/open_pull_request_response.json --request POST https://api.github.com/repos/another-owner/another-project/pulls : echo 200'
   stub git 'remote get-url origin : echo "git@github.com:owner/project"'
   stub buildkite-agent
@@ -70,7 +56,6 @@ load "$BATS_PATH/load.bash"
 
   assert_success
   assert_output --partial 'Github pull request opened: pr-url'
-  unstub jq
   unstub curl
   unstub git
 }
@@ -83,10 +68,6 @@ load "$BATS_PATH/load.bash"
   export BUILDKITE_PLUGIN_GITHUB_PULL_REQUEST_BASE=pr-base
   export GITHUB_TOKEN=secret-github-token
 
-  stub jq \
-    '-n --arg TITLE pr-title --arg BODY pr-body --arg HEAD pr-head --arg BASE pr-base "{ title: $TITLE, body: $BODY, head: $HEAD, base: $BASE }" : echo json-open-pr-request' \
-    '.number : echo 711' \
-    '.html_url : echo pr-url'
   stub curl '--silent --write-out %{http_code} --data json-open-pr-request --header "Authorization: Bearer secret-github-token" --output tmp/github_api_calls/open_pull_request_response.json --request POST https://api.github.com/repos/owner/project/pulls : echo 200'
   stub git 'remote get-url origin : echo "git@github.com:owner/project"'
   stub buildkite-agent
@@ -95,7 +76,6 @@ load "$BATS_PATH/load.bash"
 
   assert_success
   assert_output --partial 'Github pull request opened: pr-url'
-  unstub jq
   unstub curl
   unstub git
 }
@@ -107,11 +87,6 @@ load "$BATS_PATH/load.bash"
   export BUILDKITE_PLUGIN_GITHUB_PULL_REQUEST_REVIEWERS=pr-reviewer
   export GITHUB_TOKEN=secret-github-token
 
-  stub jq \
-    '-n --arg TITLE pr-title --arg BODY pr-body --arg HEAD feature-branch --arg BASE master "{ title: $TITLE, body: $BODY, head: $HEAD, base: $BASE }" : echo json-open-pr-request' \
-    '.number : echo 711' \
-    '.html_url : echo pr-url' \
-    '-n --arg REVIEWERS "pr-reviewer" --arg TEAM_REVIEWERS "" "{ reviewers: $REVIEWERS | split(\"\n\"), team_reviewers: $TEAM_REVIEWERS | split(\"\n\") }" : echo json-request-reviews-request'
   stub curl \
     '--silent --write-out %{http_code} --data json-open-pr-request --header "Authorization: Bearer secret-github-token" --output tmp/github_api_calls/open_pull_request_response.json --request POST https://api.github.com/repos/owner/project/pulls : echo 200' \
     '--silent --write-out %{http_code} --data json-request-reviews-request --header "Authorization: Bearer secret-github-token" --output tmp/github_api_calls/request_reviews_response.json --request POST https://api.github.com/repos/owner/project/pulls/711/requested_reviewers : echo 200'
@@ -123,7 +98,6 @@ load "$BATS_PATH/load.bash"
   assert_success
   assert_output --partial 'Github pull request opened: pr-url'
   assert_output --partial 'Reviews requested'
-  unstub jq
   unstub curl
   unstub git
 }
@@ -136,11 +110,6 @@ load "$BATS_PATH/load.bash"
   export BUILDKITE_PLUGIN_GITHUB_PULL_REQUEST_REVIEWERS_1=pr-reviewer2
   export GITHUB_TOKEN=secret-github-token
 
-  stub jq \
-    '-n --arg TITLE pr-title --arg BODY pr-body --arg HEAD feature-branch --arg BASE master "{ title: $TITLE, body: $BODY, head: $HEAD, base: $BASE }" : echo json-open-pr-request' \
-    '.number : echo 711' \
-    '.html_url : echo pr-url' \
-    '-n --arg REVIEWERS "pr-reviewer1\npr-reviewer2" --arg TEAM_REVIEWERS "" "{ reviewers: $REVIEWERS | split(\"\n\"), team_reviewers: $TEAM_REVIEWERS | split(\"\n\") }" : echo json-request-reviews-request'
   stub curl \
     '--silent --write-out %{http_code} --data json-open-pr-request --header "Authorization: Bearer secret-github-token" --output tmp/github_api_calls/open_pull_request_response.json --request POST https://api.github.com/repos/owner/project/pulls : echo 200' \
     '--silent --write-out %{http_code} --data json-request-reviews-request --header "Authorization: Bearer secret-github-token" --output tmp/github_api_calls/request_reviews_response.json --request POST https://api.github.com/repos/owner/project/pulls/711/requested_reviewers : echo 200'
@@ -152,7 +121,6 @@ load "$BATS_PATH/load.bash"
   assert_success
   assert_output --partial 'Github pull request opened: pr-url'
   assert_output --partial 'Reviews requested'
-  unstub jq
   unstub curl
   unstub git
 }
@@ -164,11 +132,6 @@ load "$BATS_PATH/load.bash"
   export BUILDKITE_PLUGIN_GITHUB_PULL_REQUEST_TEAM_REVIEWERS=pr-reviewer
   export GITHUB_TOKEN=secret-github-token
 
-  stub jq \
-    '-n --arg TITLE pr-title --arg BODY pr-body --arg HEAD feature-branch --arg BASE master "{ title: $TITLE, body: $BODY, head: $HEAD, base: $BASE }" : echo json-open-pr-request' \
-    '.number : echo 711' \
-    '.html_url : echo pr-url' \
-    '-n --arg REVIEWERS "" --arg TEAM_REVIEWERS "pr-reviewer" "{ reviewers: $REVIEWERS | split(\"\n\"), team_reviewers: $TEAM_REVIEWERS | split(\"\n\") }" : echo json-request-reviews-request'
   stub curl \
     '--silent --write-out %{http_code} --data json-open-pr-request --header "Authorization: Bearer secret-github-token" --output tmp/github_api_calls/open_pull_request_response.json --request POST https://api.github.com/repos/owner/project/pulls : echo 200' \
     '--silent --write-out %{http_code} --data json-request-reviews-request --header "Authorization: Bearer secret-github-token" --output tmp/github_api_calls/request_reviews_response.json --request POST https://api.github.com/repos/owner/project/pulls/711/requested_reviewers : echo 200'
@@ -180,7 +143,6 @@ load "$BATS_PATH/load.bash"
   assert_success
   assert_output --partial 'Github pull request opened: pr-url'
   assert_output --partial 'Reviews requested'
-  unstub jq
   unstub curl
   unstub git
 }
@@ -193,11 +155,6 @@ load "$BATS_PATH/load.bash"
   export BUILDKITE_PLUGIN_GITHUB_PULL_REQUEST_TEAM_REVIEWERS_1=pr-reviewer2
   export GITHUB_TOKEN=secret-github-token
 
-  stub jq \
-    '-n --arg TITLE pr-title --arg BODY pr-body --arg HEAD feature-branch --arg BASE master "{ title: $TITLE, body: $BODY, head: $HEAD, base: $BASE }" : echo json-open-pr-request' \
-    '.number : echo 711' \
-    '.html_url : echo pr-url' \
-    '-n --arg REVIEWERS "" --arg TEAM_REVIEWERS "pr-reviewer1\npr-reviewer2" "{ reviewers: $REVIEWERS | split(\"\n\"), team_reviewers: $TEAM_REVIEWERS | split(\"\n\") }" : echo json-request-reviews-request'
   stub curl \
     '--silent --write-out %{http_code} --data json-open-pr-request --header "Authorization: Bearer secret-github-token" --output tmp/github_api_calls/open_pull_request_response.json --request POST https://api.github.com/repos/owner/project/pulls : echo 200' \
     '--silent --write-out %{http_code} --data json-request-reviews-request --header "Authorization: Bearer secret-github-token" --output tmp/github_api_calls/request_reviews_response.json --request POST https://api.github.com/repos/owner/project/pulls/711/requested_reviewers : echo 200'
@@ -209,7 +166,6 @@ load "$BATS_PATH/load.bash"
   assert_success
   assert_output --partial 'Github pull request opened: pr-url'
   assert_output --partial 'Reviews requested'
-  unstub jq
   unstub curl
   unstub git
 }
@@ -221,11 +177,6 @@ load "$BATS_PATH/load.bash"
   export BUILDKITE_PLUGIN_GITHUB_PULL_REQUEST_LABELS=pr-label
   export GITHUB_TOKEN=secret-github-token
 
-  stub jq \
-    '-n --arg TITLE pr-title --arg BODY pr-body --arg HEAD feature-branch --arg BASE master "{ title: $TITLE, body: $BODY, head: $HEAD, base: $BASE }" : echo json-open-pr-request' \
-    '.number : echo 711' \
-    '.html_url : echo pr-url' \
-    '-n --arg LABELS "pr-label" "$LABELS | split(\"\n\")" : echo json-add-labels-request'
   stub curl \
     '--silent --write-out %{http_code} --data json-open-pr-request --header "Authorization: Bearer secret-github-token" --output tmp/github_api_calls/open_pull_request_response.json --request POST https://api.github.com/repos/owner/project/pulls : echo 200' \
     '--silent --write-out %{http_code} --data json-add-labels-request --header "Authorization: Bearer secret-github-token" --output tmp/github_api_calls/add_labels_response.json --request POST https://api.github.com/repos/owner/project/issues/711/labels : echo 200'
@@ -237,7 +188,6 @@ load "$BATS_PATH/load.bash"
   assert_success
   assert_output --partial 'Github pull request opened: pr-url'
   assert_output --partial 'Labels added'
-  unstub jq
   unstub curl
   unstub git
 }
@@ -248,10 +198,6 @@ load "$BATS_PATH/load.bash"
   export BUILDKITE_PLUGIN_GITHUB_PULL_REQUEST_BODY=pr-body
   export GITHUB_TOKEN=secret-github-token
 
-  stub jq \
-    '-n --arg TITLE pr-title --arg BODY pr-body --arg HEAD feature-branch --arg BASE master "{ title: $TITLE, body: $BODY, head: $HEAD, base: $BASE }" : echo json-open-pr-request' \
-    '.number : echo 711' \
-    '.html_url : echo pr-url'
   stub curl '--silent --write-out %{http_code} --data json-open-pr-request --header "Authorization: Bearer secret-github-token" --output tmp/github_api_calls/open_pull_request_response.json --request POST https://api.github.com/repos/owner/project/pulls : echo 500'
   stub git 'remote get-url origin : echo "git@github.com:owner/project"'
   stub buildkite-agent
