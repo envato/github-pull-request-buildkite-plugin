@@ -1,6 +1,6 @@
 #!/usr/bin/env bats
 
-load '/usr/local/lib/bats/load.bash'
+load "$BATS_PATH/load.bash"
 
 # Uncomment the following to get more detail on failures of stubs
 # export JQ_STUB_DEBUG=/dev/tty
