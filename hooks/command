@@ -30,7 +30,7 @@ repo=$(plugin_read_config REPO "$(repo_from_origin)")
 open_pull_request "$title" "$body" "$head" "$base" "$repo"
 response=$(cat "tmp/github_api_calls/open_pull_request_response.json")
 pr_number=$(echo "$response" | jq '.number')
-html_url=$(echo "$response" | jq '.html_url')
+html_url=$(echo "$response" | jq --raw-output '.html_url')
 echo "Github pull request opened: ${html_url}"
 plugin_set_metadata number "$pr_number"
 

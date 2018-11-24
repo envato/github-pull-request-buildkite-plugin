@@ -20,7 +20,7 @@ load "$BATS_PATH/load.bash"
   run $PWD/hooks/command
 
   assert_success
-  assert_output --partial 'Github pull request opened: "https://github.com/owner/project/pull/42"'
+  assert_output --partial 'Github pull request opened: https://github.com/owner/project/pull/42'
   unstub curl
   unstub git
 }
@@ -56,7 +56,7 @@ load "$BATS_PATH/load.bash"
   run $PWD/hooks/command
 
   assert_success
-  assert_output --partial 'Github pull request opened: "https://github.com/another-owner/another-project/pull/42"'
+  assert_output --partial 'Github pull request opened: https://github.com/another-owner/another-project/pull/42'
   unstub curl
   unstub git
 }
@@ -76,7 +76,7 @@ load "$BATS_PATH/load.bash"
   run $PWD/hooks/command
 
   assert_success
-  assert_output --partial 'Github pull request opened: "https://github.com/owner/project/pull/42"'
+  assert_output --partial 'Github pull request opened: https://github.com/owner/project/pull/42'
   unstub curl
   unstub git
 }
@@ -97,7 +97,7 @@ load "$BATS_PATH/load.bash"
   run $PWD/hooks/command
 
   assert_success
-  assert_output --partial 'Github pull request opened: "https://github.com/owner/project/pull/42"'
+  assert_output --partial 'Github pull request opened: https://github.com/owner/project/pull/42'
   assert_output --partial 'Reviews requested'
   unstub curl
   unstub git
@@ -120,7 +120,7 @@ load "$BATS_PATH/load.bash"
   run $PWD/hooks/command
 
   assert_success
-  assert_output --partial 'Github pull request opened: "https://github.com/owner/project/pull/42"'
+  assert_output --partial 'Github pull request opened: https://github.com/owner/project/pull/42'
   assert_output --partial 'Reviews requested'
   unstub curl
   unstub git
@@ -142,7 +142,7 @@ load "$BATS_PATH/load.bash"
   run $PWD/hooks/command
 
   assert_success
-  assert_output --partial 'Github pull request opened: "https://github.com/owner/project/pull/42"'
+  assert_output --partial 'Github pull request opened: https://github.com/owner/project/pull/42'
   assert_output --partial 'Reviews requested'
   unstub curl
   unstub git
@@ -165,7 +165,7 @@ load "$BATS_PATH/load.bash"
   run $PWD/hooks/command
 
   assert_success
-  assert_output --partial 'Github pull request opened: "https://github.com/owner/project/pull/42"'
+  assert_output --partial 'Github pull request opened: https://github.com/owner/project/pull/42'
   assert_output --partial 'Reviews requested'
   unstub curl
   unstub git
@@ -187,7 +187,7 @@ load "$BATS_PATH/load.bash"
   run $PWD/hooks/command
 
   assert_success
-  assert_output --partial 'Github pull request opened: "https://github.com/owner/project/pull/42"'
+  assert_output --partial 'Github pull request opened: https://github.com/owner/project/pull/42'
   assert_output --partial 'Labels added'
   unstub curl
   unstub git
@@ -210,7 +210,7 @@ load "$BATS_PATH/load.bash"
   run $PWD/hooks/command
 
   assert_success
-  assert_output --partial 'Github pull request opened: "https://github.com/owner/project/pull/42"'
+  assert_output --partial 'Github pull request opened: https://github.com/owner/project/pull/42'
   assert_output --partial 'Labels added'
   unstub curl
   unstub git
