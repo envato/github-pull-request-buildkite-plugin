@@ -7,6 +7,6 @@ services:
       - ".:/plugin"
   lint:
     image: "buildkite/plugin-linter"
-    command: ["--id", "envato/bundle-update"]
+    command: ["--id", "envato/github-pull-request"]
     volumes:
       - ".:/plugin:ro"
