@@ -25,7 +25,7 @@ load "$BATS_PATH/load.bash"
   unstub git
 }
 
-@test 'Records the opened Github pull request number in build metadata' {
+@test 'Records the opened Github pull request number in build metadata and adds an annotation' {
   export BUILDKITE_BRANCH=feature-branch
   export BUILDKITE_PLUGIN_GITHUB_PULL_REQUEST_TITLE=pr-title
   export BUILDKITE_PLUGIN_GITHUB_PULL_REQUEST_BODY=pr-body
@@ -33,7 +33,9 @@ load "$BATS_PATH/load.bash"
 
   stub curl "--silent --write-out '%{http_code}' --data '{\"title\":\"pr-title\",\"body\":\"pr-body\",\"head\":\"feature-branch\",\"base\":\"master\"}' --header 'Authorization: Bearer secret-github-token' --output tmp/github_api_calls/open_pull_request_response.json --request POST https://api.github.com/repos/owner/project/pulls : echo '{\"number\":42,\"html_url\":\"https://github.com/owner/project/pull/42\"}' > tmp/github_api_calls/open_pull_request_response.json && echo 200"
   stub git 'remote get-url origin : echo "git@github.com:owner/project"'
-  stub buildkite-agent 'meta-data set github-pull-request-plugin-number 42 : echo metadata set'
+  stub buildkite-agent \
+    'meta-data set github-pull-request-plugin-number 42 : echo metadata set' \
+    'annotate ":github: Github pull request [#42](https://github.com/owner/project/pull/42) opened." --style info : echo annotated'
 
   run $PWD/hooks/command
 

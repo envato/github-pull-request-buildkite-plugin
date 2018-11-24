@@ -46,3 +46,5 @@ if [[ -n "${labels:-}" ]]; then
   add_labels "$labels" "$pr_number" "$repo"
   echo 'Labels added'
 fi
+
+buildkite-agent annotate ":github: Github pull request [#$pr_number]($html_url) opened." --style info
