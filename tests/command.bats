@@ -6,7 +6,6 @@ load "$BATS_PATH/load.bash"
 # export JQ_STUB_DEBUG=/dev/tty
 # export CURL_STUB_DEBUG=/dev/tty
 # export GIT_STUB_DEBUG=/dev/tty
-# export CAT_STUB_DEBUG=/dev/tty
 # export BUILDKITE_AGENT_STUB_DEBUG=/dev/tty
 
 @test 'Opens the Github pull request' {
@@ -21,7 +20,6 @@ load "$BATS_PATH/load.bash"
     '.html_url : echo pr-url'
   stub curl '--silent --write-out %{http_code} --data json-open-pr-request --header "Authorization: Bearer secret-github-token" --output tmp/github_api_calls/open_pull_request_response.json --request POST https://api.github.com/repos/owner/project/pulls : echo 200'
   stub git 'remote get-url origin : echo "git@github.com:owner/project"'
-  stub cat 'tmp/github_api_calls/open_pull_request_response.json : echo json-open-pr-response'
   stub buildkite-agent
 
   run $PWD/hooks/command
@@ -45,7 +43,6 @@ load "$BATS_PATH/load.bash"
     '.html_url : echo pr-url'
   stub curl '--silent --write-out %{http_code} --data json-open-pr-request --header "Authorization: Bearer secret-github-token" --output tmp/github_api_calls/open_pull_request_response.json --request POST https://api.github.com/repos/owner/project/pulls : echo 200'
   stub git 'remote get-url origin : echo "git@github.com:owner/project"'
-  stub cat 'tmp/github_api_calls/open_pull_request_response.json : echo json-open-pr-response'
   stub buildkite-agent 'meta-data set github-pull-request-plugin-number 711 : echo metadata set'
 
   run $PWD/hooks/command
@@ -67,7 +64,6 @@ load "$BATS_PATH/load.bash"
     '.html_url : echo pr-url'
   stub curl '--silent --write-out %{http_code} --data json-open-pr-request --header "Authorization: Bearer secret-github-token" --output tmp/github_api_calls/open_pull_request_response.json --request POST https://api.github.com/repos/another-owner/another-project/pulls : echo 200'
   stub git 'remote get-url origin : echo "git@github.com:owner/project"'
-  stub cat 'tmp/github_api_calls/open_pull_request_response.json : echo json-open-pr-response'
   stub buildkite-agent
 
   run $PWD/hooks/command
@@ -93,7 +89,6 @@ load "$BATS_PATH/load.bash"
     '.html_url : echo pr-url'
   stub curl '--silent --write-out %{http_code} --data json-open-pr-request --header "Authorization: Bearer secret-github-token" --output tmp/github_api_calls/open_pull_request_response.json --request POST https://api.github.com/repos/owner/project/pulls : echo 200'
   stub git 'remote get-url origin : echo "git@github.com:owner/project"'
-  stub cat 'tmp/github_api_calls/open_pull_request_response.json : echo json-open-pr-response'
   stub buildkite-agent
 
   run $PWD/hooks/command
@@ -121,9 +116,6 @@ load "$BATS_PATH/load.bash"
     '--silent --write-out %{http_code} --data json-open-pr-request --header "Authorization: Bearer secret-github-token" --output tmp/github_api_calls/open_pull_request_response.json --request POST https://api.github.com/repos/owner/project/pulls : echo 200' \
     '--silent --write-out %{http_code} --data json-request-reviews-request --header "Authorization: Bearer secret-github-token" --output tmp/github_api_calls/request_reviews_response.json --request POST https://api.github.com/repos/owner/project/pulls/711/requested_reviewers : echo 200'
   stub git 'remote get-url origin : echo "git@github.com:owner/project"'
-  stub cat \
-    'tmp/github_api_calls/open_pull_request_response.json : echo json-open-pr-response' \
-    'tmp/github_api_calls/request_reviews_response.json : echo json-request-reviews-response'
   stub buildkite-agent
 
   run $PWD/hooks/command
@@ -153,9 +145,6 @@ load "$BATS_PATH/load.bash"
     '--silent --write-out %{http_code} --data json-open-pr-request --header "Authorization: Bearer secret-github-token" --output tmp/github_api_calls/open_pull_request_response.json --request POST https://api.github.com/repos/owner/project/pulls : echo 200' \
     '--silent --write-out %{http_code} --data json-request-reviews-request --header "Authorization: Bearer secret-github-token" --output tmp/github_api_calls/request_reviews_response.json --request POST https://api.github.com/repos/owner/project/pulls/711/requested_reviewers : echo 200'
   stub git 'remote get-url origin : echo "git@github.com:owner/project"'
-  stub cat \
-    'tmp/github_api_calls/open_pull_request_response.json : echo json-open-pr-response' \
-    'tmp/github_api_calls/request_reviews_response.json : echo json-request-reviews-response'
   stub buildkite-agent
 
   run $PWD/hooks/command
@@ -184,9 +173,6 @@ load "$BATS_PATH/load.bash"
     '--silent --write-out %{http_code} --data json-open-pr-request --header "Authorization: Bearer secret-github-token" --output tmp/github_api_calls/open_pull_request_response.json --request POST https://api.github.com/repos/owner/project/pulls : echo 200' \
     '--silent --write-out %{http_code} --data json-request-reviews-request --header "Authorization: Bearer secret-github-token" --output tmp/github_api_calls/request_reviews_response.json --request POST https://api.github.com/repos/owner/project/pulls/711/requested_reviewers : echo 200'
   stub git 'remote get-url origin : echo "git@github.com:owner/project"'
-  stub cat \
-    'tmp/github_api_calls/open_pull_request_response.json : echo json-open-pr-response' \
-    'tmp/github_api_calls/request_reviews_response.json : echo json-request-reviews-response'
   stub buildkite-agent
 
   run $PWD/hooks/command
@@ -216,9 +202,6 @@ load "$BATS_PATH/load.bash"
     '--silent --write-out %{http_code} --data json-open-pr-request --header "Authorization: Bearer secret-github-token" --output tmp/github_api_calls/open_pull_request_response.json --request POST https://api.github.com/repos/owner/project/pulls : echo 200' \
     '--silent --write-out %{http_code} --data json-request-reviews-request --header "Authorization: Bearer secret-github-token" --output tmp/github_api_calls/request_reviews_response.json --request POST https://api.github.com/repos/owner/project/pulls/711/requested_reviewers : echo 200'
   stub git 'remote get-url origin : echo "git@github.com:owner/project"'
-  stub cat \
-    'tmp/github_api_calls/open_pull_request_response.json : echo json-open-pr-response' \
-    'tmp/github_api_calls/request_reviews_response.json : echo json-request-reviews-response'
   stub buildkite-agent
 
   run $PWD/hooks/command
@@ -247,9 +230,6 @@ load "$BATS_PATH/load.bash"
     '--silent --write-out %{http_code} --data json-open-pr-request --header "Authorization: Bearer secret-github-token" --output tmp/github_api_calls/open_pull_request_response.json --request POST https://api.github.com/repos/owner/project/pulls : echo 200' \
     '--silent --write-out %{http_code} --data json-add-labels-request --header "Authorization: Bearer secret-github-token" --output tmp/github_api_calls/add_labels_response.json --request POST https://api.github.com/repos/owner/project/issues/711/labels : echo 200'
   stub git 'remote get-url origin : echo "git@github.com:owner/project"'
-  stub cat \
-    'tmp/github_api_calls/open_pull_request_response.json : echo json-open-pr-response' \
-    'tmp/github_api_calls/add_labels_response.json : echo json-add-labels-response'
   stub buildkite-agent
 
   run $PWD/hooks/command
@@ -274,7 +254,6 @@ load "$BATS_PATH/load.bash"
     '.html_url : echo pr-url'
   stub curl '--silent --write-out %{http_code} --data json-open-pr-request --header "Authorization: Bearer secret-github-token" --output tmp/github_api_calls/open_pull_request_response.json --request POST https://api.github.com/repos/owner/project/pulls : echo 500'
   stub git 'remote get-url origin : echo "git@github.com:owner/project"'
-  stub cat 'tmp/github_api_calls/open_pull_request_response.json : echo json-open-pr-response'
   stub buildkite-agent
 
   run $PWD/hooks/command
