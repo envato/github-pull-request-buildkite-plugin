@@ -12,6 +12,7 @@ function open_pull_request() {
   local url
 
   payload=$(jq -n \
+               --compact-output \
                --arg TITLE "${title}" \
                --arg BODY  "${body}" \
                --arg HEAD  "${head}" \
@@ -30,6 +31,7 @@ function request_reviews() {
   local url
 
   payload=$(jq -n \
+               --compact-output \
                --arg REVIEWERS      "${reviewers}" \
                --arg TEAM_REVIEWERS "${team_reviewers}" \
                '{ reviewers: $REVIEWERS | split("\n"), team_reviewers: $TEAM_REVIEWERS | split("\n") }')
@@ -44,7 +46,7 @@ function add_labels() {
   local payload
   local url
 
-  payload=$(jq -n --arg LABELS "${labels}" '$LABELS | split("\n")')
+  payload=$(jq -n --compact-output --arg LABELS "${labels}" '$LABELS | split("\n")')
   url="$(base_url "${repo}")/issues/${pr_number}/labels"
   github_post add_labels "${url}" "${payload}"
 }

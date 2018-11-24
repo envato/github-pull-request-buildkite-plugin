@@ -1,11 +1,12 @@
 version: "3"
 services:
   tests:
-    image: "buildkite/plugin-tester"
+    build:
+      context: .
     volumes:
       - ".:/plugin"
   lint:
     image: "buildkite/plugin-linter"
-    command: ["--id", "envato/bundle-update"]
+    command: ["--id", "envato/github-pull-request"]
     volumes:
       - ".:/plugin:ro"
