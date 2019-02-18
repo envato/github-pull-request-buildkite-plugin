@@ -36,7 +36,7 @@ plugin_set_metadata number "$pr_number"
 
 reviewers=$(plugin_read_list REVIEWERS)
 team_reviewers=$(plugin_read_list TEAM_REVIEWERS)
-if [[ -n "${reviewers:-}" || "${team_reviewers:-}" ]]; then
+if [[ -n "${reviewers:-}" || -n "${team_reviewers:-}" ]]; then
   request_reviews "$reviewers" "$team_reviewers" "$pr_number" "$repo"
   echo 'Reviews requested'
 fi
