@@ -13,7 +13,7 @@ in the build meta-data with key: `github-pull-request-plugin-number`.
 
 The only required configuration is the pull request title. In this case the
 pull request body will be empty, and the new pull request will propose merging
-the current branch into `master`.
+the current branch into `main`.
 
 ```yml
 steps:
@@ -123,7 +123,7 @@ Default: `BUILDKITE_BRANCH` (The current branch being built)
 The name of the branch you want the changes pulled into. This should be an
 existing branch on the repository (see below).
 
-Default: `master`
+Default: `main`
 
 ### `repo` (optional)
 

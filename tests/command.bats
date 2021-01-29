@@ -13,7 +13,7 @@ load "$BATS_PATH/load.bash"
   export BUILDKITE_PLUGIN_GITHUB_PULL_REQUEST_BODY=pr-body
   export GITHUB_TOKEN=secret-github-token
 
-  stub curl "--silent --write-out '%{http_code}' --data '{\"title\":\"pr-title\",\"body\":\"pr-body\",\"head\":\"feature-branch\",\"base\":\"master\"}' --header 'Authorization: Bearer secret-github-token' --output tmp/github_api_calls/open_pull_request_response.json --request POST https://api.github.com/repos/owner/project/pulls : echo '{\"number\":42,\"html_url\":\"https://github.com/owner/project/pull/42\"}' > tmp/github_api_calls/open_pull_request_response.json && echo 200"
+  stub curl "--silent --write-out '%{http_code}' --data '{\"title\":\"pr-title\",\"body\":\"pr-body\",\"head\":\"feature-branch\",\"base\":\"main\"}' --header 'Authorization: Bearer secret-github-token' --output tmp/github_api_calls/open_pull_request_response.json --request POST https://api.github.com/repos/owner/project/pulls : echo '{\"number\":42,\"html_url\":\"https://github.com/owner/project/pull/42\"}' > tmp/github_api_calls/open_pull_request_response.json && echo 200"
   stub git 'remote get-url origin : echo "git@github.com:owner/project"'
   stub buildkite-agent
 
@@ -31,7 +31,7 @@ load "$BATS_PATH/load.bash"
   export BUILDKITE_PLUGIN_GITHUB_PULL_REQUEST_BODY=pr-body
   export GITHUB_TOKEN=secret-github-token
 
-  stub curl "--silent --write-out '%{http_code}' --data '{\"title\":\"pr-title\",\"body\":\"pr-body\",\"head\":\"feature-branch\",\"base\":\"master\"}' --header 'Authorization: Bearer secret-github-token' --output tmp/github_api_calls/open_pull_request_response.json --request POST https://api.github.com/repos/owner/project/pulls : echo '{\"number\":42,\"html_url\":\"https://github.com/owner/project/pull/42\"}' > tmp/github_api_calls/open_pull_request_response.json && echo 200"
+  stub curl "--silent --write-out '%{http_code}' --data '{\"title\":\"pr-title\",\"body\":\"pr-body\",\"head\":\"feature-branch\",\"base\":\"main\"}' --header 'Authorization: Bearer secret-github-token' --output tmp/github_api_calls/open_pull_request_response.json --request POST https://api.github.com/repos/owner/project/pulls : echo '{\"number\":42,\"html_url\":\"https://github.com/owner/project/pull/42\"}' > tmp/github_api_calls/open_pull_request_response.json && echo 200"
   stub git 'remote get-url origin : echo "git@github.com:owner/project"'
   stub buildkite-agent \
     'meta-data set github-pull-request-plugin-number 42 : echo metadata set' \
@@ -51,7 +51,7 @@ load "$BATS_PATH/load.bash"
   export BUILDKITE_PLUGIN_GITHUB_PULL_REQUEST_REPO=another-owner/another-project
   export GITHUB_TOKEN=secret-github-token
 
-  stub curl "--silent --write-out '%{http_code}' --data '{\"title\":\"pr-title\",\"body\":\"pr-body\",\"head\":\"feature-branch\",\"base\":\"master\"}' --header 'Authorization: Bearer secret-github-token' --output tmp/github_api_calls/open_pull_request_response.json --request POST https://api.github.com/repos/another-owner/another-project/pulls : echo '{\"number\":42,\"html_url\":\"https://github.com/another-owner/another-project/pull/42\"}' > tmp/github_api_calls/open_pull_request_response.json && echo 200"
+  stub curl "--silent --write-out '%{http_code}' --data '{\"title\":\"pr-title\",\"body\":\"pr-body\",\"head\":\"feature-branch\",\"base\":\"main\"}' --header 'Authorization: Bearer secret-github-token' --output tmp/github_api_calls/open_pull_request_response.json --request POST https://api.github.com/repos/another-owner/another-project/pulls : echo '{\"number\":42,\"html_url\":\"https://github.com/another-owner/another-project/pull/42\"}' > tmp/github_api_calls/open_pull_request_response.json && echo 200"
   stub git 'remote get-url origin : echo "git@github.com:owner/project"'
   stub buildkite-agent
 
@@ -91,7 +91,7 @@ load "$BATS_PATH/load.bash"
   export GITHUB_TOKEN=secret-github-token
 
   stub curl \
-    "--silent --write-out '%{http_code}' --data '{\"title\":\"pr-title\",\"body\":\"pr-body\",\"head\":\"feature-branch\",\"base\":\"master\"}' --header 'Authorization: Bearer secret-github-token' --output tmp/github_api_calls/open_pull_request_response.json --request POST https://api.github.com/repos/owner/project/pulls : echo '{\"number\":42,\"html_url\":\"https://github.com/owner/project/pull/42\"}' > tmp/github_api_calls/open_pull_request_response.json && echo 200" \
+    "--silent --write-out '%{http_code}' --data '{\"title\":\"pr-title\",\"body\":\"pr-body\",\"head\":\"feature-branch\",\"base\":\"main\"}' --header 'Authorization: Bearer secret-github-token' --output tmp/github_api_calls/open_pull_request_response.json --request POST https://api.github.com/repos/owner/project/pulls : echo '{\"number\":42,\"html_url\":\"https://github.com/owner/project/pull/42\"}' > tmp/github_api_calls/open_pull_request_response.json && echo 200" \
     "--silent --write-out '%{http_code}' --data '{\"reviewers\":[\"pr-reviewer\"],\"team_reviewers\":[]}' --header 'Authorization: Bearer secret-github-token' --output tmp/github_api_calls/request_reviews_response.json --request POST https://api.github.com/repos/owner/project/pulls/42/requested_reviewers : echo '{}' > tmp/github_api_calls/request_reviews_response.json && echo 200"
   stub git 'remote get-url origin : echo "git@github.com:owner/project"'
   stub buildkite-agent
@@ -114,7 +114,7 @@ load "$BATS_PATH/load.bash"
   export GITHUB_TOKEN=secret-github-token
 
   stub curl \
-    "--silent --write-out '%{http_code}' --data '{\"title\":\"pr-title\",\"body\":\"pr-body\",\"head\":\"feature-branch\",\"base\":\"master\"}' --header 'Authorization: Bearer secret-github-token' --output tmp/github_api_calls/open_pull_request_response.json --request POST https://api.github.com/repos/owner/project/pulls : echo '{\"number\":42,\"html_url\":\"https://github.com/owner/project/pull/42\"}' > tmp/github_api_calls/open_pull_request_response.json && echo 200" \
+    "--silent --write-out '%{http_code}' --data '{\"title\":\"pr-title\",\"body\":\"pr-body\",\"head\":\"feature-branch\",\"base\":\"main\"}' --header 'Authorization: Bearer secret-github-token' --output tmp/github_api_calls/open_pull_request_response.json --request POST https://api.github.com/repos/owner/project/pulls : echo '{\"number\":42,\"html_url\":\"https://github.com/owner/project/pull/42\"}' > tmp/github_api_calls/open_pull_request_response.json && echo 200" \
     "--silent --write-out '%{http_code}' --data '{\"reviewers\":[\"pr-reviewer1\",\"pr-reviewer2\"],\"team_reviewers\":[]}' --header 'Authorization: Bearer secret-github-token' --output tmp/github_api_calls/request_reviews_response.json --request POST https://api.github.com/repos/owner/project/pulls/42/requested_reviewers : echo '{}' > tmp/github_api_calls/request_reviews_response.json && echo 200"
   stub git 'remote get-url origin : echo "git@github.com:owner/project"'
   stub buildkite-agent
@@ -136,7 +136,7 @@ load "$BATS_PATH/load.bash"
   export GITHUB_TOKEN=secret-github-token
 
   stub curl \
-    "--silent --write-out '%{http_code}' --data '{\"title\":\"pr-title\",\"body\":\"pr-body\",\"head\":\"feature-branch\",\"base\":\"master\"}' --header 'Authorization: Bearer secret-github-token' --output tmp/github_api_calls/open_pull_request_response.json --request POST https://api.github.com/repos/owner/project/pulls : echo '{\"number\":42,\"html_url\":\"https://github.com/owner/project/pull/42\"}' > tmp/github_api_calls/open_pull_request_response.json && echo 200" \
+    "--silent --write-out '%{http_code}' --data '{\"title\":\"pr-title\",\"body\":\"pr-body\",\"head\":\"feature-branch\",\"base\":\"main\"}' --header 'Authorization: Bearer secret-github-token' --output tmp/github_api_calls/open_pull_request_response.json --request POST https://api.github.com/repos/owner/project/pulls : echo '{\"number\":42,\"html_url\":\"https://github.com/owner/project/pull/42\"}' > tmp/github_api_calls/open_pull_request_response.json && echo 200" \
     "--silent --write-out '%{http_code}' --data '{\"reviewers\":[],\"team_reviewers\":[\"pr-reviewer-team\"]}' --header 'Authorization: Bearer secret-github-token' --output tmp/github_api_calls/request_reviews_response.json --request POST https://api.github.com/repos/owner/project/pulls/42/requested_reviewers : echo '{}' > tmp/github_api_calls/request_reviews_response.json && echo 200"
   stub git 'remote get-url origin : echo "git@github.com:owner/project"'
   stub buildkite-agent
@@ -159,7 +159,7 @@ load "$BATS_PATH/load.bash"
   export GITHUB_TOKEN=secret-github-token
 
   stub curl \
-    "--silent --write-out '%{http_code}' --data '{\"title\":\"pr-title\",\"body\":\"pr-body\",\"head\":\"feature-branch\",\"base\":\"master\"}' --header 'Authorization: Bearer secret-github-token' --output tmp/github_api_calls/open_pull_request_response.json --request POST https://api.github.com/repos/owner/project/pulls : echo '{\"number\":42,\"html_url\":\"https://github.com/owner/project/pull/42\"}' > tmp/github_api_calls/open_pull_request_response.json && echo 200" \
+    "--silent --write-out '%{http_code}' --data '{\"title\":\"pr-title\",\"body\":\"pr-body\",\"head\":\"feature-branch\",\"base\":\"main\"}' --header 'Authorization: Bearer secret-github-token' --output tmp/github_api_calls/open_pull_request_response.json --request POST https://api.github.com/repos/owner/project/pulls : echo '{\"number\":42,\"html_url\":\"https://github.com/owner/project/pull/42\"}' > tmp/github_api_calls/open_pull_request_response.json && echo 200" \
     "--silent --write-out '%{http_code}' --data '{\"reviewers\":[],\"team_reviewers\":[\"pr-reviewer-team1\",\"pr-reviewer-team2\"]}' --header 'Authorization: Bearer secret-github-token' --output tmp/github_api_calls/request_reviews_response.json --request POST https://api.github.com/repos/owner/project/pulls/42/requested_reviewers : echo '{}' > tmp/github_api_calls/request_reviews_response.json && echo 200"
   stub git 'remote get-url origin : echo "git@github.com:owner/project"'
   stub buildkite-agent
@@ -181,7 +181,7 @@ load "$BATS_PATH/load.bash"
   export GITHUB_TOKEN=secret-github-token
 
   stub curl \
-    "--silent --write-out '%{http_code}' --data '{\"title\":\"pr-title\",\"body\":\"pr-body\",\"head\":\"feature-branch\",\"base\":\"master\"}' --header 'Authorization: Bearer secret-github-token' --output tmp/github_api_calls/open_pull_request_response.json --request POST https://api.github.com/repos/owner/project/pulls : echo '{\"number\":42,\"html_url\":\"https://github.com/owner/project/pull/42\"}' > tmp/github_api_calls/open_pull_request_response.json && echo 200" \
+    "--silent --write-out '%{http_code}' --data '{\"title\":\"pr-title\",\"body\":\"pr-body\",\"head\":\"feature-branch\",\"base\":\"main\"}' --header 'Authorization: Bearer secret-github-token' --output tmp/github_api_calls/open_pull_request_response.json --request POST https://api.github.com/repos/owner/project/pulls : echo '{\"number\":42,\"html_url\":\"https://github.com/owner/project/pull/42\"}' > tmp/github_api_calls/open_pull_request_response.json && echo 200" \
     "--silent --write-out '%{http_code}' --data '[\"pr-label\"]' --header 'Authorization: Bearer secret-github-token' --output tmp/github_api_calls/add_labels_response.json --request POST https://api.github.com/repos/owner/project/issues/42/labels : echo '{}' > tmp/github_api_calls/add_labels_response.json && echo 200"
   stub git 'remote get-url origin : echo "git@github.com:owner/project"'
   stub buildkite-agent
@@ -204,7 +204,7 @@ load "$BATS_PATH/load.bash"
   export GITHUB_TOKEN=secret-github-token
 
   stub curl \
-    "--silent --write-out '%{http_code}' --data '{\"title\":\"pr-title\",\"body\":\"pr-body\",\"head\":\"feature-branch\",\"base\":\"master\"}' --header 'Authorization: Bearer secret-github-token' --output tmp/github_api_calls/open_pull_request_response.json --request POST https://api.github.com/repos/owner/project/pulls : echo '{\"number\":42,\"html_url\":\"https://github.com/owner/project/pull/42\"}' > tmp/github_api_calls/open_pull_request_response.json && echo 200" \
+    "--silent --write-out '%{http_code}' --data '{\"title\":\"pr-title\",\"body\":\"pr-body\",\"head\":\"feature-branch\",\"base\":\"main\"}' --header 'Authorization: Bearer secret-github-token' --output tmp/github_api_calls/open_pull_request_response.json --request POST https://api.github.com/repos/owner/project/pulls : echo '{\"number\":42,\"html_url\":\"https://github.com/owner/project/pull/42\"}' > tmp/github_api_calls/open_pull_request_response.json && echo 200" \
     "--silent --write-out '%{http_code}' --data '[\"pr-label1\",\"pr-label2\"]' --header 'Authorization: Bearer secret-github-token' --output tmp/github_api_calls/add_labels_response.json --request POST https://api.github.com/repos/owner/project/issues/42/labels : echo '{}' > tmp/github_api_calls/add_labels_response.json && echo 200"
   stub git 'remote get-url origin : echo "git@github.com:owner/project"'
   stub buildkite-agent
@@ -224,7 +224,7 @@ load "$BATS_PATH/load.bash"
   export BUILDKITE_PLUGIN_GITHUB_PULL_REQUEST_BODY=pr-body
   export GITHUB_TOKEN=secret-github-token
 
-  stub curl "--silent --write-out '%{http_code}' --data '{\"title\":\"pr-title\",\"body\":\"pr-body\",\"head\":\"feature-branch\",\"base\":\"master\"}' --header 'Authorization: Bearer secret-github-token' --output tmp/github_api_calls/open_pull_request_response.json --request POST https://api.github.com/repos/owner/project/pulls : echo 'The error message from Github' > tmp/github_api_calls/open_pull_request_response.json && echo 512"
+  stub curl "--silent --write-out '%{http_code}' --data '{\"title\":\"pr-title\",\"body\":\"pr-body\",\"head\":\"feature-branch\",\"base\":\"main\"}' --header 'Authorization: Bearer secret-github-token' --output tmp/github_api_calls/open_pull_request_response.json --request POST https://api.github.com/repos/owner/project/pulls : echo 'The error message from Github' > tmp/github_api_calls/open_pull_request_response.json && echo 512"
   stub git 'remote get-url origin : echo "git@github.com:owner/project"'
   stub buildkite-agent
 

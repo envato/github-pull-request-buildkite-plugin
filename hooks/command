@@ -21,7 +21,7 @@ if [[ -z "${GITHUB_TOKEN:-}" ]]; then
   exit 1
 fi
 
-base=$(plugin_read_config BASE master)
+base=$(plugin_read_config BASE main)
 body=$(plugin_read_config BODY '')
 head=$(plugin_read_config HEAD "${BUILDKITE_BRANCH}")
 title=$(plugin_read_config TITLE '')
