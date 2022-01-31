@@ -1,0 +1,33 @@
+---
+name: tests
+on: [push]
+jobs:
+  plugin-tests:
+    name: Tests
+    runs-on: ubuntu-latest
+    container:
+      image: buildkite/plugin-tester:latest
+      volumes:
+        - "${{github.workspace}}:/plugin"
+    steps:
+      - uses: actions/checkout@v2
+      - name: tests
+        run: bats tests/
+  plugin-lint:
+    name: Lint
+    runs-on: ubuntu-latest
+    container:
+      image: buildkite/plugin-linter:latest
+      volumes:
+        - "${{github.workspace}}:/plugin"
+    steps:
+      - uses: actions/checkout@v2
+      - name: lint
+        run: lint --id envato/github-pull-request
+  plugin-shellcheck:
+    name: Shellcheck
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - name: Run ShellCheck
+        uses: ludeeus/action-shellcheck@master
