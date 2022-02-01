@@ -1,6 +1,6 @@
 # Github Pull Request Buildkite Plugin
 
-[![tests](https://github.com/envato/github-pull-request-buildkite-plugin/actions/workflows/tests.yml/badge.svg)](https://github.com/envato/github-pull-request-buildkite-plugin/actions/workflows/tests.yml)
+[![tests](https://github.com/envato/github-pull-request-buildkite-plugin/actions/workflows/tests.yml/badge.svg?branch=main)](https://github.com/envato/github-pull-request-buildkite-plugin/actions/workflows/tests.yml)
 
 A [Buildkite plugin](https://buildkite.com/docs/agent/v3/plugins) that lets you
 open Github pull requests.
